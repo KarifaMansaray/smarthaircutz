@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SmartHairCutz.Barbershop</title>
+  <meta name="description" content="SmartHairCutz — modern cuts, fades, beard trims & styling. Book online or visit our shop." />
+  <meta name="theme-color" content="#1f2937" />
+  <style>
+    /* ---------- Basic reset & variables ---------- */
+    :root{
+      --bg:#000000; --card:#000000; --accent:#1b96dd; --muted:#6b7280; --text:#111827;
+      --maxw:1100px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+    img{max-width:100%;display:block;border-radius:8px}
+
+    /* ---------- Layout ---------- */
+    header{background:linear-gradient(90deg,#111827 0%, #1f2937 100%);color:#fff;padding:20px}
+    .container{max-width:var(--maxw);margin:0 auto;padding:18px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#ef4444);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+    nav ul{list-style:none;display:flex;gap:12px}
+    nav a{color:rgba(230,238,248,.92);text-decoration:none;padding:8px 10px;border-radius:8px;font-weight:600}
+    nav a:hover{background:rgba(255,255,255,0.04)}
+
+    /* ---------- Hero ---------- */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:start;padding:36px 0}
+    .hero h1{font-size:36px;line-height:1.02;margin:8px 0}
+    .hero p{color:#d1d5db;margin-bottom:16px}
+    .cta{display:flex;gap:12px;margin-bottom:18px}
+    .btn{background:var(--accent);color:#fff;padding:10px 16px;border-radius:10px;text-decoration:none;font-weight:700;display:inline-block}
+    .btn.secondary{background:transparent;border:2px solid rgba(255,255,255,0.12);color:#fff}
+
+    /* ---------- Cards & forms ---------- */
+    .card{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 8px 30px rgba(16,24,40,0.06)}
+    label{display:block;font-size:13px;margin-bottom:6px;color:#374151}
+    .input, .select, textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #e6e9ef;margin-bottom:12px;font-size:14px}
+    textarea{resize:vertical}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* ---------- Services & gallery ---------- */
+    .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:16px}
+    .service{padding:14px;border-radius:10px;border:1px solid #eef2f6;background:linear-gradient(180deg,#111111,white)}
+    .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px;}
+
+    /* ---------- About & map ---------- */
+    .about{display:flex;flex-wrap:wrap;gap:18px;margin-top:26px}
+    .map-wrapper{width:100%;height:260px;border-radius:8px;overflow:hidden;background:#eaeef6;display:flex;align-items:center;justify-content:center}
+
+    /* ---------- Footer ---------- */
+    footer{margin-top:36px;padding:28px 0;color:var(--muted)}
+
+    /* ---------- Responsive ---------- */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .gallery{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:520px){
+      nav ul{display:none}
+      .logo{width:48px;height:48px}
+      .gallery img{height:100px;object-fit:cover}
+    }
+
+    /* small utilities */
+    .muted{color:var(--muted)}
+    .flex{display:flex;align-items:center}
+    .space{gap:12px}
+    .tag{background:#111827;color:#fff;padding:6px 10px;border-radius:999px;font-size:12px;display:inline-block}
+    
+    /* Loading animation */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #ffffff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 10px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">SHC✂️</div>
+        
+        <div>
+          <div style="font-weight:800;font-size:18px">SmartHairCutz.Barbershop</div>
+          <div class="small muted">Modern cuts • Classic fades • Beard art</div>
+        </div>
+      </div>
+
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="flex space">
+        <div class="small muted">Call: +232 76 927 498</div>
+        <a href="#book" class="btn" id="openBook">Book Now</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="heroTitle">
+      <div>
+        <div class="tag">Trusted Barbers • Since 2024</div>
+        <h1 id="heroTitle" style="color: #ef4444;">Look sharp. Feel Smart.</h1>
+        <p>SmartHairCutz brings pro barbers, modern styles and warm customer service. Choose a service, pick a time and we'll take care of the rest.</p>
+
+        <div class="cta">
+          <a href="#book" class="btn" id="heroBook">Book Appointment</a>
+          <a href="#services" class="btn secondary">View Services</a>
+        </div>
+
+        <div class="services" aria-label="Services">
+          <div class="service card">
+            <h4>Classic Cut</h4>
+            <p class="small"style="color: skyblue;">Precision cut, wash & light styling — 30–40 min</p>
+            <div class="small muted" style="color: #000000;">Starting at Nle 30,000</div>
+             <div class="small muted" style="color: black;"> booking Nle 100.00</div>
+          </div>
+          <div class="service card">
+            <h4>Skin Fade</h4>
+            <p class="small" style="color: skyblue;">Sharp fades and clean lines — 30–45 min</p>
+            <div class="small muted" style="color: black;">Starting at Nle 30,000</div>
+             <div class="small muted" style="color: black;"> booking Nle 100.00</div>
+          </div>
+          <div class="service card">
+            <h4>Beard Trim</h4>
+            <p class="small" style="color: skyblue;">Shaping, detailing  — 10-15 min</p>
+            <div class="small muted" style="color: black;"> Starting at Nle 15.00</div>
+             <div class="small muted" style="color: black;"> booking Nle 50.00</div>
+          </div>
+          <div class="service card">
+            <h4>Kids Cut</h4>
+            <p class="small" style="color: skyblue;">Patient, friendly barbers — 20–30 min</p>
+            <div class="small muted" style="color: black;">Starting at Nle 40.00</div>
+             <div class="small muted" style="color: black;"> booking Nle 100.00</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUICK BOOK -->
+      <aside class="card booking" aria-labelledby="bookingHeading">
+        <h3 id="bookingHeading" style="color: goldenrod;">Quick Book</h3>
+        <form id="bookForm" aria-describedby="bookMsg">
+          <label for="name">Full name</label>
+          <input id="name" class="input" type="text" required placeholder="e.g. Ibrahim Conteh" />
+
+          <label for="service">Service</label>
+          <select id="service" class="select" required>
+            <option value="">Select a service</option>
+            <option>Classic Cut</option>
+            <option>Skin Fade</option>
+            <option>Beard Trim</option>
+            <option>Kids Cut</option>
+          </select>
+
+          <label for="date">Date</label>
+          <input id="date" class="input" type="date" required />
+
+          <label for="time">Time</label>
+          <input id="time" class="input" type="time" required />
+
+          <label for="phone">Phone</label>
+          <input id="phone" class="input" type="tel" placeholder="+232 76 927 498" required />
+
+          <button type="submit" class="btn" style="width:100%" id="submitBtn">
+            Confirm Booking
+          </button>
+          <div id="bookMsg" class="small muted" style="margin-top:8px"></div>
+        </form>
+      </aside>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery">
+      <h2 style="margin-top:18px;color: goldenrod;">Gallery</h2>
+      <p class="small muted">Our Work</p>
+      <div class="gallery" id="galleryGrid" aria-live="polite">
+        <!-- Default sample images (replace with your own) -->
+        <img src="clean cut\IMG_2038.jpg" alt="Barber cutting hair" />
+        <img src="clean cut\IMG_2042.jpg" alt="Barber tools" />
+        <img src="clean cut\IMG-20241008-WA0004.jpg" alt="Barbershop interior" />
+        <img src="clean cut\IMG-20241008-WA0005.jpg" alt="Styled haircut" />
+         <img src="clean cut\IMG-20250921-WA0024.jpg"alt="Styled haircut" />
+          <img src="clean cut\IMG-20241008-WA0006.jpg"alt="Styled haircut" />
+           <img src="clean cut\IMG-20241008-WA0009.jpg"alt="Styled haircut" />
+            <img src="clean cut\IMG-20241008-WA0010.jpg"alt="Styled haircut" />
+             <img src="clean cut\IMG-20241008-WA0012.jpg"alt="Styled haircut" />
+              <img src="clean cut\IMG-20250921-WA0017.jpg"alt="Styled haircut" />
+               <img src="clean cut\IMG-20250921-WA0018.jpg"alt="Styled haircut" />
+                <img src="clean cut\IMG-20250921-WA0019.jpg"alt="Styled haircut" />
+                 <img src="clean cut\IMG-20250921-WA0021.jpg"alt="Styled haircut" />
+                  <img src="clean cut\IMG-20250921-WA0022.jpg"alt="Styled haircut" />
+      </div>
+    </section>
+
+    <!-- ABOUT + MAP -->
+    <section id="about" class="about">
+      <div style="flex:1;min-width:260px">
+        <h3 style="color: goldenrod;"> About SmartHairCutz</h3>
+        <p class="small muted">We are a small team of skilled barbers dedicated to clean lines, modern styles and warm customer service. Our shop focuses on hygiene, precision and a relaxed atmosphere.</p>
+        <ul style="margin-top:12px" class="small muted">
+          <li>Open Mon–Sat: 9:00 — 18:00</li>
+          <li>Walk-ins welcome, appointments recommended</li>
+          <li>Payment: Cash & Mobile Money</li>
+        </ul>
+      </div>
+
+      <div style="width:320px">
+        <div class="card">
+          <h4 style="color: goldenrod;">Location</h4>
+          <p class="small muted">Germany Embassy Juntion — Hill Station</p>
+
+          <!-- Map area: primary iframe + fallback link & image -->
+          <div class="map-wrapper" id="mapArea" aria-hidden="false" role="region" aria-label="Location map">
+            <!-- Primary: Google Maps iframe (clean). If browser blocks, we show fallback below. -->
+            <iframe
+              id="gmapIframe"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3946.385921920522!2d-13.255407889867186!3d8.461799597575357!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xf04c36f0ef9ba23%3A0x4934c5a26157bd59!2sGerman%20Embassy!5e0!3m2!1sen!2ssl!4v1758722519457!5m2!1sen!2ssl"
+              width="100%" height="100%" style="border:0;display:block;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen>
+            </iframe>
+
+            <!-- Fallback (hidden by default). If iframe fails, the script will show this block -->
+            <div id="mapFallback" style="display:none;padding:12px;text-align:center;">
+              <p class="small muted">Map failed to load — <a id="mapsLink" href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3946.385921920522!2d-13.255407889867186!3d8.461799597575357!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xf04c36f0ef9ba23%3A0x4934c5a26157bd59!2sGerman%20Embassy!5e0!3m2!1sen!2ssl!4v1758722519457!5m2!1sen!2ssl" target="_blank" rel="noopener">Open in Google Maps</a></p>
+              <!-- Placeholder static image (no API key). Replace with a screenshot or static map if you have an API key. -->
+              <img id="mapImage" alt="Map placeholder" src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='260'%3E%3Crect width='100%25' height='100%25' fill='%23e6eef8'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-size='16' fill='%236b7280'%3EMap preview not available%3C/text%3E%3C/svg%3E" style="max-width:100%;height:auto;border-radius:6px;margin-top:8px;">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" style="margin-top:22px">
+      <h3 style="color: goldenrod;">Contact</h3>
+      <div class="card" style="display:flex;gap:18px;flex-wrap:wrap">
+        <div style="flex:1;min-width:220px">
+          <p class="small muted">Have a question or want to request a group booking? Drop us a message and we'll get back to you.</p>
+          <p class="muted small"><strong>Email:</strong> karifasmartn@gamil.com</p>
+          <p class="muted small"><strong>Phone:</strong> +232 76 927 498</p>
+        </div>
+        <div style="width:360px">
+          <form id="contactForm">
+            <input id="cname" class="input" placeholder="Your name" required />
+            <input id="cphone" class="input" placeholder="Phone or email" required />
+            <textarea id="cmsg" class="input" placeholder="Message" rows="4" required></textarea>
+            <button class="btn" type="submit" style="width:100%" id="contactSubmitBtn">Send</button>
+            <div id="contactMsg" class="small muted" style="margin-top:8px"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
+        <div class="small muted">© SmartHairCutz.Barbershop — All rights reserved.</div>
+        <div class="small muted">Designed for quick setup • Built with ❤️</div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Simple modal (re-usable) -->
+  <div id="modal" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.5);z-index:60">
+    <div style="width:min(520px,96%);background:#fff;border-radius:12px;padding:16px;box-shadow:0 8px 30px rgba(2,6,23,0.2)">
+      <div id="modalBody"></div>
+      <div style="display:flex;justify-content:flex-end;margin-top:12px">
+        <button id="closeModalBtn" style="background:#f3f4f6;border-radius:8px;padding:8px 12px;border:0;cursor:pointer">Close</button>
+      </div>
+    </div>
+  </div>
+
+<!-- Include EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  /* ---------------- EMAILJS SETUP ---------------- */
+  emailjs.init("RrLW0asSHFzcs5NLJ"); // ✅ Your EmailJS Public Key
+  const OWNER_EMAIL = "karifasmartn@gmail.com";
+  const OWNER_WHATSAPP = "23276927498";
+
+  /* ---------------- HELPER MESSAGE FUNCTION ---------------- */
+  function showMsg(el, text, ok = true) {
+    el.textContent = text;
+    el.style.color = ok ? '#16a34a' : '#b91c1c';
+  }
+
+  /* ---------------- QUICK BOOK FORM ---------------- */
+  const bookForm = document.getElementById('bookForm');
+  const bookMsg = document.getElementById('bookMsg');
+
+  if (bookForm) {
+    const dateInput = document.getElementById('date');
+    if (dateInput) {
+      const t = new Date();
+      t.setDate(t.getDate() + 1);
+      dateInput.value = t.toISOString().split('T')[0];
+    }
+
+    bookForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const service = document.getElementById('service').value.trim();
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      const phone = document.getElementById('phone').value.trim();
+
+      if (!name || !service || !date || !time || !phone) {
+        showMsg(bookMsg, '⚠️ Please fill all fields', false);
+        return;
+      }
+
+      const chosen = new Date(date + ' ' + time);
+      const now = new Date();
+      if (chosen < now) {
+        showMsg(bookMsg, '⚠️ Please choose a future date and time', false);
+        return;
+      }
+
+      try {
+        await emailjs.send("service_e93j5e8", "template_yjiwwfi", {
+          to_email: OWNER_EMAIL,
+          name,
+          service,
+          date,
+          time,
+          phone
+        });
+
+        showMsg(bookMsg, '✅ Booking confirmed! You’ll get an email notification.');
+
+        const ownerMsg = `💈 *New Booking* 💈
+Name: ${name}
+Service: ${service}
+Date: ${date}
+Time: ${time}
+Phone: ${phone}`;
+        window.open(`https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(ownerMsg)}`, '_blank');
+
+        bookForm.reset();
+      } catch (err) {
+        console.error(err);
+        showMsg(bookMsg, '❌ Failed to send notification. Try again later.', false);
+      }
+    });
+  }
+
+  /* ---------------- CONTACT FORM ---------------- */
+  const contactForm = document.getElementById('contactForm');
+  const contactMsg = document.getElementById('contactMsg');
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('cname').value.trim();
+      const contact = document.getElementById('cphone').value.trim();
+      const message = document.getElementById('cmsg').value.trim();
+
+      if (!name || !contact || !message) {
+        showMsg(contactMsg, '⚠️ Please fill all fields', false);
+        return;
+      }
+
+      const msgs = JSON.parse(localStorage.getItem('smartmsgs') || '[]');
+      msgs.push({ name, contact, message, created: new Date().toISOString() });
+      localStorage.setItem('smartmsgs', JSON.stringify(msgs));
+
+      showMsg(contactMsg, '✅ Thanks — we received your message.');
+      contactForm.reset();
+    });
+  }
+
+  /* ---------------- MODAL CONTROLS ---------------- */
+  const modal = document.getElementById('modal');
+  const modalBody = document.getElementById('modalBody');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const openBookBtns = [document.getElementById('openBook'), document.getElementById('heroBook')];
+
+  if (modal && modalBody && closeModalBtn) {
+    openBookBtns.forEach(btn => {
+      if (btn) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          modalBody.innerHTML = '<h3>Book an appointment</h3><p class="small muted">Use the quick-book form on the right to schedule. This modal is an example.</p>';
+          modal.style.display = 'flex';
+        });
+      }
+    });
+
+    closeModalBtn.addEventListener('click', () => modal.style.display = 'none');
+    modal.addEventListener('click', (ev) => {
+      if (ev.target === modal) modal.style.display = 'none';
+    });
+  }
+
+  /* ---------------- MAP FALLBACK HANDLER ---------------- */
+  const iframe = document.getElementById('gmapIframe');
+  const fallback = document.getElementById('mapFallback');
+  if (iframe && fallback) {
+    let loaded = false;
+    iframe.addEventListener('load', () => loaded = true);
+    setTimeout(() => {
+      if (!loaded) {
+        iframe.style.display = 'none';
+        fallback.style.display = 'block';
+      }
+    }, 2500);
+  }
+
+  /* ---------------- GALLERY LIGHTBOX ---------------- */
+  const gallery = document.getElementById('galleryGrid');
+  if (gallery) {
+    const overlay = document.createElement('div');
+    overlay.id = 'lightboxOverlay';
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.innerHTML = `
+      <button id="closeBtn" title="Close">×</button>
+      <button id="prevBtn" title="Previous">❮</button>
+      <img id="lightboxImage" src="" alt="Gallery image" />
+      <button id="nextBtn" title="Next">❯</button>
+    `;
+    document.body.appendChild(overlay);
+
+    const overlayImg = document.getElementById('lightboxImage');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const closeBtn = document.getElementById('closeBtn');
+
+    let images = Array.from(gallery.querySelectorAll('img'));
+    let currentIndex = 0;
+
+    function openLightbox(index) {
+      if (index < 0 || index >= images.length) return;
+      currentIndex = index;
+      overlayImg.src = images[index].src;
+      overlay.style.display = 'flex';
+      overlay.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeLightbox() {
+      overlay.style.display = 'none';
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+
+    function showNext() {
+      currentIndex = (currentIndex + 1) % images.length;
+      overlayImg.src = images[currentIndex].src;
+    }
+
+    function showPrev() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      overlayImg.src = images[currentIndex].src;
+    }
+
+    images.forEach((img, index) => {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', () => openLightbox(index));
+    });
+
+    nextBtn.addEventListener('click', showNext);
+    prevBtn.addEventListener('click', showPrev);
+    closeBtn.addEventListener('click', closeLightbox);
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (overlay.style.display === 'flex') {
+        if (e.key === 'ArrowRight') showNext();
+        else if (e.key === 'ArrowLeft') showPrev();
+        else if (e.key === 'Escape') closeLightbox();
+      }
+    });
+  }
+
+  console.log('✅ SmartHairCutz scripts loaded successfully.');
+});
+</script>
+
+<!-- Lightbox CSS -->
+<style>
+  #lightboxOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  #lightboxOverlay img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.2);
+  }
+  #lightboxOverlay button {
+    position: absolute;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    font-size: 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  #lightboxOverlay button:hover {
+    background: rgba(255,255,255,0.35);
+  }
+  #prevBtn { left: 40px; }
+  #nextBtn { right: 40px; }
+  #closeBtn {
+    top: 30px;
+    right: 30px;
+    font-size: 2rem;
+    line-height: 1;
+  }
+</style>
+
+
+</body>
+</html>
